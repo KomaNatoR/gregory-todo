@@ -1,4 +1,4 @@
-import { Item } from './Item.js';
+import { getItemTemplate } from './getItemTemplate.js';
 import {items} from './items.js';
 
 const refs = { 
@@ -8,30 +8,58 @@ const refs = {
 
 const render = () => { 
     // const lis = items.map((item) => getItemTemplate(item)); - так було!
-    const lis = items.map((item) => Item(item));
+    const lis = items.map(getItemTemplate);
     refs.list.innerHTML = '';
     refs.list.insertAdjacentHTML('beforeend', lis.join(''));
 };
 
-render();
-
-refs.form.addEventListener('submit', addItem);
-
-function addItem (e) {
-    e.preventDefault();
+function hendleSubmit(e) {
     // const value = e.target.elements.text.value; -- повний варіант!
     const { value } = e.target.elements.text;
-    const payLoad = {
-        text: value,
-        isDone: false,
-    };
 
-    refs.form.reset();
-    items.push(payLoad);
+    e.preventDefault();
+    addItem(value);
     render();
+    refs.form.reset();
+}
+
+function addItem (text) {
+    
+    const payLoad = {
+        // text: text, - так було!
+        text,
+        isDone: false,
+        id: uuid.v4(),
+    };
+    items.push(payLoad);
 };
 
+const toggleItem = () => { 
+    console.log('toggle');
+};
+const viewItem = () => { 
+    console.log('view');
+};
+const deleteItem = () => { 
+    console.log('delete');
+};
 
-    console.log(items);
+function hendleListClick(e) {
+    if (e.target === e.currentTarget) return;
 
+    const { action } = e.target.dataset;
+    const parent = e.target.closest('li');
+    const { id } = parent.dataset;
+    console.log(action, id);
+    // console.log(e.currentTarget);
 
+    switch (action) {
+        case value:
+            toggleItem();
+            break;
+    }
+}
+
+render();
+refs.form.addEventListener('submit', hendleSubmit);
+refs.list.addEventListener('click', hendleListClick);

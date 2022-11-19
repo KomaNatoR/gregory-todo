@@ -1,14 +1,17 @@
 export const items = [
     {
-       text: 'by bread',
-       isDone: true, 
+      id: 1,
+      text: 'by bread',
+      isDone: true, 
     },
     {
-       text: 'by milk',
-       isDone: false, 
+      id: 2,
+      text: 'by milk',
+      isDone: false, 
     },
     {
-       text: 'push money to phone',
-       isDone: false, 
+      id: 3,
+      text: 'push money to phone',
+      isDone: false, 
     },
 ];

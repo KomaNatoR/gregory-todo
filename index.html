@@ -19,20 +19,37 @@
             justify-content: space-between;
             border: 1px solid grey;
             padding: 10px;
+            background-color: white;
+        }
+        .btn {
+            border-radius: 3px;
+            border-color: transparent;
+            color: white;    
+        }
+        .add {
+            background-color: rgb(17, 194, 17);
+        }
+        .delete {
+            box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+            background-color: rgb(189, 5, 5);
+        }
+        .view {
+            color: black;
         }
     </style>
 </head>
-<body>
+<body style="background-color: rgb(180, 180, 180)">
     <form class="form">
         <label>
             <span>Text</span>
             <input type="text" name="text" placeholder="write your wish here!" />
         </label>
-        <button type="submit">add</button>
+        <button class="btn add" type="submit">add task</button>
     </form>
 
     <ul class="list"></ul>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js" ></script>
     <script src="./index.js" type="module"></script>
 </body>
 </html>
