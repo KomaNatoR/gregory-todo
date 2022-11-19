@@ -1,37 +1,37 @@
-// const getItemTemplate = (text) - так було!
-const getItemTemplate = ({text, isDone}) =>
-    `<li class="item">
-        <div>
-            <input type="checkbox" ${isDone ? 'checked' : ''}/>
-            <span>${text}</span>
-        </div>
-        <button type="button">x</button>
-    </li>`;
+import { Item } from './Item.js';
+import {items} from './items.js';
 
 const refs = { 
     list: document.querySelector('.list'),
+    form: document.querySelector('.form'),
 };
 
 const render = () => { 
-    const lis = items.map((item) => getItemTemplate(item));
+    // const lis = items.map((item) => getItemTemplate(item)); - так було!
+    const lis = items.map((item) => Item(item));
     refs.list.innerHTML = '';
     refs.list.insertAdjacentHTML('beforeend', lis.join(''));
 };
 
-const items = [
-    {
-       text: 'by bread',
-       isDone: true, 
-    },
-    {
-       text: 'by milk',
-       isDone: false, 
-    },
-    {
-       text: 'push money to phone',
-       isDone: false, 
-    },
-];
 render();
+
+refs.form.addEventListener('submit', addItem);
+
+function addItem (e) {
+    e.preventDefault();
+    // const value = e.target.elements.text.value; -- повний варіант!
+    const { value } = e.target.elements.text;
+    const payLoad = {
+        text: value,
+        isDone: false,
+    };
+
+    refs.form.reset();
+    items.push(payLoad);
+    render();
+};
+
+
+    console.log(items);
 
 
