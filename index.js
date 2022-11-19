@@ -1,6 +1,8 @@
 import { getItemTemplate } from './getItemTemplate.js';
-import {items} from './items.js';
+// import { items } from './items.js'; -- було так!
+import {items as importedItems} from './items.js';
 
+let items = importedItems;
 const refs = { 
     list: document.querySelector('.list'),
     form: document.querySelector('.form'),
@@ -34,14 +36,16 @@ function addItem (text) {
     items.push(payLoad);
 };
 
-const toggleItem = () => { 
-    console.log('toggle');
+const toggleItem = (id) => { 
+    console.log('toggle', id);
 };
-const viewItem = () => { 
-    console.log('view');
+const viewItem = (id) => { 
+    console.log('view', id);
 };
-const deleteItem = () => { 
-    console.log('delete');
+const deleteItem = (id) => { 
+    items = items.filter(item => item.id !== id);
+    render();
+    console.log(items, id);
 };
 
 function hendleListClick(e) {
@@ -50,12 +54,17 @@ function hendleListClick(e) {
     const { action } = e.target.dataset;
     const parent = e.target.closest('li');
     const { id } = parent.dataset;
-    console.log(action, id);
     // console.log(e.currentTarget);
 
     switch (action) {
-        case value:
-            toggleItem();
+        case 'toggle':
+            toggleItem(id);
+            break;
+       case 'view':
+            viewItem(id);
+            break;
+       case 'delete':
+            deleteItem(id);
             break;
     }
 }
