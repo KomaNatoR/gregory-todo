@@ -42,20 +42,34 @@ const toggleItem = (id) => {
         item.id === id
         ? {...item, isDone: !item.isDone,} 
         : item
-        );
+    );
+    console.log();
+    // items = items.map(item =>
+    //     item.isDone === true
+    //     ? parent.style.backgroundColor = "green"
+    //     : parent.style.backgroundColor = "white"
+    // );
 };
 const viewItem = (id) => { 
-    const instance = basicLightbox.create(`
+    const modal = basicLightbox.create(`
         <div class="modal">
             <p></p>
             <button class="btn" type="button">Close</button>
         </div>
     `);
-    instance.show();
-    const modalText = instance.element().querySelector('p');
+    modal.show();
+    const modalText = modal.element().querySelector('p');
     modalText.textContent = items.find(item => item.id === id).created;
-    const modalButton = instance.element().querySelector('button');
-    modalButton.addEventListener('click', instance.close);
+    const modalButton = modal.element().querySelector('button');
+    window.addEventListener('keydown', onEscCloseModal);
+    function onEscCloseModal(e) {
+        if (e.code === 'Escape') {
+            modal.close();
+            window.removeEventListener('keydown', onEscCloseModal);
+        }
+        console.log(e.code);
+    }
+    modalButton.addEventListener('click', modal.close);
 };
 const deleteItem = (id) => { 
     items = items.filter(item => item.id !== id);
@@ -69,7 +83,8 @@ function hendleListClick(e) {
     const { action } = e.target.dataset;
     const parent = e.target.closest('li');
     const { id } = parent.dataset;
-    // console.log(e.currentTarget);
+    // console.log(parent);
+    // ifCheckedChangeColor(parent);
 
     switch (action) {
         case 'toggle':
@@ -82,11 +97,20 @@ function hendleListClick(e) {
             deleteItem(id);
             break;
     }
-}
+};
+// function ifCheckedChangeColor(parent) {
+//     console.dir(parent.querySelector('input').attributes.checked);
+//     if (parent.querySelector('input').attributes.checked) {
+//         parent.style.backgroundColor = "green";
+//     } else {
+//         parent.style.backgroundColor = "white";
+//     }
+// }
 
 render();
 refs.form.addEventListener('submit', hendleSubmit);
 refs.list.addEventListener('click', hendleListClick);
+
 
 // --- basicLightBox ---
 // const instance = basicLightbox.create(`
