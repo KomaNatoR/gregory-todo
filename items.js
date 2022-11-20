@@ -1,17 +1,20 @@
 export const items = [
     {
       id: '1',
-      text: 'by bread',
+      text: 'buy bread',
       isDone: true, 
+      created: "2022-11-01",
     },
     {
       id: '2',
-      text: 'by milk',
-      isDone: false, 
+      text: 'buy milk',
+      isDone: false,
+      created: "2022-11-01",
     },
     {
       id: '3',
       text: 'push money to phone',
-      isDone: false, 
+      isDone: false,
+      created: "2022-11-01",
     },
 ];

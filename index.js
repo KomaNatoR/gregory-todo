@@ -32,15 +32,30 @@ function addItem (text) {
         text,
         isDone: false,
         id: uuid.v4(),
+        created: new Date(),
     };
     items.push(payLoad);
 };
 
 const toggleItem = (id) => { 
-    console.log('toggle', id);
+    items = items.map(item =>
+        item.id === id
+        ? {...item, isDone: !item.isDone,} 
+        : item
+        );
 };
 const viewItem = (id) => { 
-    console.log('view', id);
+    const instance = basicLightbox.create(`
+        <div class="modal">
+            <p></p>
+            <button class="btn" type="button">Close</button>
+        </div>
+    `);
+    instance.show();
+    const modalText = instance.element().querySelector('p');
+    modalText.textContent = items.find(item => item.id === id).created;
+    const modalButton = instance.element().querySelector('button');
+    modalButton.addEventListener('click', instance.close);
 };
 const deleteItem = (id) => { 
     items = items.filter(item => item.id !== id);
@@ -72,3 +87,19 @@ function hendleListClick(e) {
 render();
 refs.form.addEventListener('submit', hendleSubmit);
 refs.list.addEventListener('click', hendleListClick);
+
+// --- basicLightBox ---
+// const instance = basicLightbox.create(`
+//     <div class="modal">
+//         <p>
+//             Your first lightbox with just a few lines of code.
+//             Yes, it's really that simple.
+//         </p>
+//         <button class="btn" type="button">Close</button>
+//     </div>
+// `);
+// instance.show();
+// const modalText = instance.element().querySelector('p');
+// modalText.textContent = 123;
+// const modalButton = instance.element().querySelector('button');
+// modalButton.addEventListener('click', instance.close);
